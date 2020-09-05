@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+//using System.Diagnostics;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -14,8 +15,13 @@ public class Player : MonoBehaviour {
     private float _firerate = 0.5f;
     private float _canFire = -1f;
     [SerializeField]
-    //so only player can edit it
     private int _lives = 3;
+    [SerializeField]
+    private int _score;
+    [SerializeField]
+    private bool PlayerActive = true;
+
+
     private SpawnManager _spawn;
     //triple shot status variable
     [SerializeField]
@@ -25,11 +31,16 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject _ShieldPre;
     [SerializeField]
+    private GameObject _hurt01;
+    [SerializeField]
+    private GameObject _hurt02;
+    [SerializeField]
     private bool _triple_shot = false;
     [SerializeField]
     private bool _speedUP = false;
     [SerializeField]
     private bool _shieldUP = false;
+
 
     //public float horizontalInput;
 
@@ -52,6 +63,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown (KeyCode.Space) && Time.time > _canFire) {
             shoot ();
         }
+        //Debug.Log(getScore());
 
     }
 
@@ -109,13 +121,22 @@ public class Player : MonoBehaviour {
             _shieldUP = false;
         } else {
             _lives -= 1;
+            if (_lives == 2){
+                _hurt01.SetActive(true);
+            }
+            else if (_lives == 1){
+                _hurt02.SetActive(true);
+            }
         }
 
         //check if dead, if dead -> destroy
 
         if (_lives < 1) {
+            //Destory (this.gameObject);
             //communicate with spawnmanager
             _spawn.OnPlayerDeath ();
+            this.gameObject.SetActive(false);
+            //Destroy(this.gameObject);
 
         }
     }
@@ -146,5 +167,17 @@ public class Player : MonoBehaviour {
         //GameObject shield = Instantiate (_ShieldPre,transform.position, Quaternion.identity);
         //shield.transform.parent = this.transform;
         _ShieldPre.SetActive (true);
+    }
+
+    public void addScore (int points) {
+        _score += points;
+    }
+
+    public int getScore () {
+        return _score;
+    }
+
+    public int getLives () {
+        return _lives;
     }
 }
