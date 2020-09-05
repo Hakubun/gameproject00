@@ -17,16 +17,23 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] _powerUP;
 
-    void Start () {
-        //SpawnRoutine ();
+    private Asteroid _asteroid;
+
+    // void Start () {
+    //    // _asteroid = GameObject.Find("Asteroid").GetComponent<Asteroid> ();
+        
+        
+        
+    // }
+
+    // // Update is called once per frame
+    // void Update () {
+    // }
+
+    public void startSpawn(){
         coroutine = SpawnEnemyRoutine (yieldTime);
         StartCoroutine (coroutine);
         StartCoroutine (SpawnPowerUpRoutine());
-    }
-
-    // Update is called once per frame
-    void Update () {
-
     }
 
     IEnumerator SpawnEnemyRoutine (float T) {

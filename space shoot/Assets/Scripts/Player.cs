@@ -31,6 +31,10 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject _ShieldPre;
     [SerializeField]
+    private GameObject _hurt01;
+    [SerializeField]
+    private GameObject _hurt02;
+    [SerializeField]
     private bool _triple_shot = false;
     [SerializeField]
     private bool _speedUP = false;
@@ -117,6 +121,12 @@ public class Player : MonoBehaviour {
             _shieldUP = false;
         } else {
             _lives -= 1;
+            if (_lives == 2){
+                _hurt01.SetActive(true);
+            }
+            else if (_lives == 1){
+                _hurt02.SetActive(true);
+            }
         }
 
         //check if dead, if dead -> destroy
